@@ -1,0 +1,12 @@
+{application, meh_config,
+ [
+  {description, "Configuration for host specific credentials"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib                  
+                 ]},
+  {mod, { meh_config_app, []}},
+  {env, []}
+ ]}.
