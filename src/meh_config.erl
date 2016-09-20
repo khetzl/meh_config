@@ -4,7 +4,7 @@
 %%% Application module for host specific configuration app.
 %%% @end
 %%% Created : 19 Sep 2016 by Kristof Hetzl <kristof@Kristofs-MacBook-Pro-2.local>
--module(meh_config_app).
+-module(meh_config).
 
 -behaviour(application).
 
@@ -31,7 +31,7 @@ start(_StartType, _StartArgs) ->
             {ok, Pid};
         Error ->
             Error
-                end.
+    end.
 stop() ->
     application:stop(meh_config).
 

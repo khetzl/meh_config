@@ -19,7 +19,7 @@ compile:
 	$(REBAR) compile
 
 dev: compile
-	$(ERL) -pa _build/default/lib/*/ebin -config config/sys.config -s meh_config_app
+	$(ERL) -pa _build/default/lib/*/ebin -config config/sys.config -s meh_config
 
 test:
 	$(REBAR) eunit

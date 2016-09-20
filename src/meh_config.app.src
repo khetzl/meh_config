@@ -7,6 +7,6 @@
                   kernel,
                   stdlib                  
                  ]},
-  {mod, { meh_config_app, []}},
+  {mod, { meh_config, []}},
   {env, []}
  ]}.
