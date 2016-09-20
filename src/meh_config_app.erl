@@ -8,8 +8,18 @@
 
 -behaviour(application).
 
+%% API
+-export([reload/0, reload/1]).
+
 %% Application callbacks
 -export([start/0, start/2, stop/0, stop/1]).
+
+%% API
+reload() ->
+    meh_worker:reload().
+
+reload(Config) when is_list(Config) ->
+    meh_worker:reload(Config).
 
 %%% Application callbacks
 start() ->
@@ -22,7 +32,6 @@ start(_StartType, _StartArgs) ->
         Error ->
             Error
                 end.
-
 stop() ->
     application:stop(meh_config).
 

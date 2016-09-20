@@ -12,14 +12,14 @@
 -define(ERROR(Fmt, Args), io:format(Fmt, Args)).
 
 %% API
--export([start_link/0]).
+-export([start_link/0, reload/0, reload/1]).
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
          terminate/2, code_change/3]).
 
 -define(SERVER, ?MODULE).
--define(?DEFAULT_TIMEOUT, 5000).
+-define(DEFAULT_TIMEOUT, 5000).
 
 -record(state, {}).
 
@@ -27,9 +27,20 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
+%% @doc
+%% Reload the substitution defined in the sys.config. Meh will load the file
+%% again, and read the key definitions from the file set in the app config.
+%% @end
 reload() ->
     Timeout = application:get_env(meh_config, call_timeout, ?DEFAULT_TIMEOUT),
     gen_server:call(?SERVER, {reload_subs, app_config}, Timeout).
+
+%% @doc
+%% Reload the config variable substitution based on a new config. Can load new files.
+%% @end
+reload(Config) when is_list(Config) ->
+    Timeout = application:get_env(meh_config, call_timeout, ?DEFAULT_TIMEOUT),
+    gen_server:call(?SERVER, {reload_subs, Config}, Timeout).
 
 %%% gen_server callbacks
 init([]) ->
@@ -37,7 +48,6 @@ init([]) ->
     {ok, #state{}}.
 
 handle_call({reload_subs, app_config}, _From, State) ->
-    %% Reload the same substitution as it's given in meh's config.
     init_subs(),
     Reply = ok,
     {reply, Reply, State};
